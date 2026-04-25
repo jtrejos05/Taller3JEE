@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Curso Estructuras de Datos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        h1   { color: #2c3e50; }
+        h2   { color: #34495e; border-bottom: 1px solid #ccc; padding-bottom: 6px; }
+
+        /* Mensajes */
+        .msg-info  { background:#d4edda; border:1px solid #c3e6cb; color:#155724; padding:8px 12px; border-radius:4px; margin-bottom:10px; }
+        .msg-error { background:#f8d7da; border:1px solid #f5c6cb; color:#721c24; padding:8px 12px; border-radius:4px; margin-bottom:10px; }
+
+        /* Barra de progreso general */
+        .progress-bar-bg  { background:#ddd; border-radius:8px; height:18px; width:100%; max-width:400px; }
+        .progress-bar-fill{ background:#27ae60; height:18px; border-radius:8px; }
+
+        /* Tabla de clases */
+        table  { border-collapse: collapse; width:100%; background:#fff; }
+        th, td { border:1px solid #ddd; padding:8px 12px; text-align:left; }
+        th     { background:#2c3e50; color:#fff; }
+        tr:hover { background:#f0f0f0; cursor:pointer; }
+
+        /* Estados */
+        .estado-COMPLETADO  { color:#27ae60; font-weight:bold; }
+        .estado-EN_PROGRESO { color:#e67e22; font-weight:bold; }
+        .estado-PENDIENTE   { color:#95a5a6; }
+
+        /* Panel detalle */
+        .panel { background:#fff; border:1px solid #ddd; border-radius:6px; padding:16px; margin-top:16px; }
+        .panel label { display:block; margin-top:10px; font-weight:bold; }
+        .panel input[type=text] { width:120px; padding:4px; }
+        .panel button { margin-top:12px; margin-right:8px; padding:8px 16px;
+                        border:none; border-radius:4px; cursor:pointer; color:#fff; }
+        .btn-iniciar   { background:#2980b9; }
+        .btn-completar { background:#27ae60; }
+        .btn-avanzar   { background:#8e44ad; }
+
+        /* Recomendación */
+        .recomendacion { margin-top:12px; padding:10px; border-radius:4px; font-weight:bold; }
+        .rec-CONTINUAR { background:#d4edda; color:#155724; }
+        .rec-REFORZAR  { background:#fff3cd; color:#856404; }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form id="mainForm">
+
+        <h1>📚 Curso Estructuras de Datos</h1>
+
+        <!-- Mensajes globales -->
+        <h:messages globalOnly="true" layout="table"
+                    infoClass="msg-info" errorClass="msg-error"/>
+
+        <!-- ── Resumen general ── -->
+        <h2>Progreso general</h2>
+        <p>
+            Clases completadas: <strong>#{cursoBean.totalCompletadas} / 36</strong>
+        </p>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill"
+                 style="width: #{cursoBean.porcentajeGeneral}%"/>
+        </div>
+        <p>#{cursoBean.porcentajeGeneral}%</p>
+
+        <!-- ── Tabla de clases ── -->
+        <h2>Lista de clases</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tema</th>
+                    <th>Estado</th>
+                    <th>Progreso</th>
+                    <th>Calificación</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ui:repeat value="#{cursoBean.progresos}" var="p">
+                    <tr>
+                        <td>#{p.clase.numeroclase}</td>
+                        <td>#{p.clase.tema}</td>
+                        <td>
+                            <span class="estado-#{p.estado}">#{p.estado}</span>
+                        </td>
+                        <td>#{p.progresoPorcentaje}%</td>
+                        <td>
+                            <h:outputText value="#{p.calificacion}"
+                                          rendered="#{p.calificacion != null}"/>
+                            <h:outputText value="—"
+                                          rendered="#{p.calificacion == null}"/>
+                        </td>
+                        <td>
+                            <h:commandButton value="Ver"
+                                             styleClass="btn-iniciar"
+                                             action="#{cursoBean.seleccionarClase(p.clase)}"
+                                             update="mainForm:detalle mainForm:recomendacionPanel"/>
+                        </td>
+                    </tr>
+                </ui:repeat>
+            </tbody>
+        </table>
+
+        <!-- ── Panel de detalle / evaluación ── -->
+        <h:panelGroup id="detalle"
+                      rendered="#{cursoBean.claseSeleccionada != null}">
+            <div class="panel">
+                <h2>Clase #{cursoBean.claseSeleccionada.numeroclase}
+                    — #{cursoBean.claseSeleccionada.tema}</h2>
+
+                <p><strong>Descripción:</strong>
+                   #{cursoBean.claseSeleccionada.descripcion}</p>
+
+                <p><strong>Material:</strong>
+                   <h:outputLink value="#{cursoBean.claseSeleccionada.materialUrl}"
+                                 target="_blank">
+                       Ver recurso
+                   </h:outputLink>
+                </p>
+
+                <!-- Estado actual del progreso -->
+                <h:panelGroup rendered="#{cursoBean.progresoActual != null}">
+                    <p>
+                        <strong>Estado:</strong>
+                        <span class="estado-#{cursoBean.progresoActual.estado}">
+                            #{cursoBean.progresoActual.estado}
+                        </span>
+                        &nbsp;|&nbsp;
+                        <strong>Progreso:</strong> #{cursoBean.progresoActual.progresoPorcentaje}%
+                        &nbsp;|&nbsp;
+                        <strong>Calificación:</strong>
+                        <h:outputText value="#{cursoBean.progresoActual.calificacion}"
+                                      rendered="#{cursoBean.progresoActual.calificacion != null}"/>
+                        <h:outputText value="—"
+                                      rendered="#{cursoBean.progresoActual.calificacion == null}"/>
+                    </p>
+                </h:panelGroup>
+
+                <!-- Botón iniciar (solo si está PENDIENTE) -->
+                <h:commandButton value="▶ Iniciar clase"
+                                 styleClass="btn-iniciar"
+                                 rendered="#{cursoBean.progresoActual != null
+                                             and cursoBean.progresoActual.estado == 'PENDIENTE'}"
+                                 action="#{cursoBean.iniciarClase()}"
+                                 update="mainForm:detalle mainForm:recomendacionPanel"/>
+
+                <!-- Formulario evaluación (solo si está EN_PROGRESO) -->
+                <h:panelGroup rendered="#{cursoBean.progresoActual != null
+                                          and cursoBean.progresoActual.estado == 'EN_PROGRESO'}">
+                    <label>Calificación (0.0 – 5.0):</label>
+                    <h:inputText value="#{cursoBean.calificacionInput}"
+                                 id="calif" required="true"
+                                 converterMessage="Ingrese un número válido"/>
+
+                    <label>Porcentaje completado (0 – 100):</label>
+                    <h:inputText value="#{cursoBean.porcentajeInput}"
+                                 id="porc" required="true"
+                                 converterMessage="Ingrese un número válido"/>
+
+                    <br/>
+                    <h:commandButton value="✔ Completar y evaluar"
+                                     styleClass="btn-completar"
+                                     action="#{cursoBean.completarYEvaluar()}"
+                                     update="mainForm:detalle mainForm:recomendacionPanel"/>
+                </h:panelGroup>
+
+                <!-- Botón avanzar (solo si hay recomendación CONTINUAR) -->
+                <h:commandButton value="➜ Avanzar a siguiente clase"
+                                 styleClass="btn-avanzar"
+                                 rendered="#{cursoBean.recomendacion != null
+                                             and cursoBean.recomendacion.tipo == 'CONTINUAR'}"
+                                 action="#{cursoBean.avanzar()}"
+                                 update="mainForm:detalle mainForm:recomendacionPanel"/>
+            </div>
+        </h:panelGroup>
+
+        <!-- ── Panel recomendación ── -->
+        <h:panelGroup id="recomendacionPanel"
+                      rendered="#{cursoBean.recomendacion != null}">
+            <div class="recomendacion rec-#{cursoBean.recomendacion.tipo}">
+                🤖 Recomendación: #{cursoBean.recomendacion.mensaje}
+            </div>
+        </h:panelGroup>
+
+    </h:form>
+</h:body>
+</html>
