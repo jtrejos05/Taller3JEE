@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core">
+
+<f:metadata>
+    <f:viewParam name="clase" value="#{detalleBean.numeroClase}"/>
+    <f:viewAction action="#{detalleBean.cargar()}"/>
+</f:metadata>
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Detalle de Clase — Estructuras de Datos</title>
+    <style>
+        :root {
+            --primary:   #2c3e50;
+            --accent:    #3498db;
+            --success:   #27ae60;
+            --warning:   #f39c12;
+            --danger:    #e74c3c;
+            --purple:    #8e44ad;
+            --bg:        #f0f4f8;
+            --card:      #ffffff;
+            --border:    #dce3ec;
+            --text:      #2c3e50;
+            --muted:     #7f8c8d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg);
+               color: var(--text); min-height: 100vh; }
+
+        /* ── Header ── */
+        .header { background: var(--primary); color: #fff; padding: 16px 32px;
+                  display: flex; align-items: center; gap: 16px; }
+        .header a { color: #a8c7e8; text-decoration: none; font-size: .9em; }
+        .header a:hover { color: #fff; }
+        .header h1 { font-size: 1.15em; font-weight: 600; flex: 1; }
+
+        /* ── Layout ── */
+        .container { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
+
+        /* ── Messages ── */
+        .msg-info  { background:#d4edda; border-left:4px solid var(--success);
+                     color:#155724; padding:12px 16px; border-radius:6px; margin-bottom:16px; }
+        .msg-error { background:#f8d7da; border-left:4px solid var(--danger);
+                     color:#721c24; padding:12px 16px; border-radius:6px; margin-bottom:16px; }
+
+        /* ── Paso indicador ── */
+        .steps { display:flex; gap:0; margin-bottom:28px; border-radius:10px;
+                 overflow:hidden; border:1px solid var(--border); }
+        .step  { flex:1; padding:14px 10px; text-align:center; font-size:.85em;
+                 font-weight:600; background:#f8f9fa; color:var(--muted);
+                 border-right:1px solid var(--border); }
+        .step:last-child { border-right:none; }
+        .step.activo  { background:var(--accent); color:#fff; }
+        .step.hecho   { background:var(--success); color:#fff; }
+        .step .num    { display:block; font-size:1.4em; margin-bottom:2px; }
+
+        /* ── Card ── */
+        .card { background:var(--card); border:1px solid var(--border);
+                border-radius:12px; padding:28px; margin-bottom:20px;
+                box-shadow:0 2px 8px rgba(0,0,0,.06); }
+        .card h2 { font-size:1.2em; color:var(--primary); margin-bottom:6px; }
+        .card .sub { color:var(--muted); font-size:.9em; margin-bottom:20px; }
+
+        /* ── Video ── */
+        .video-wrap { position:relative; padding-bottom:56.25%; height:0;
+                      overflow:hidden; border-radius:10px; margin-bottom:20px;
+                      background:#000; }
+        .video-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%;
+                             border:none; border-radius:10px; }
+
+        /* ── Cuestionario ── */
+        .quiz-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+        .quiz-progress-text { font-size:.9em; color:var(--muted); }
+        .quiz-prog-bar { background:#ddd; border-radius:6px; height:8px; width:200px; margin-top:4px; }
+        .quiz-prog-fill { height:8px; border-radius:6px; background:linear-gradient(90deg,var(--accent),var(--success)); transition:width .3s; }
+
+        .pregunta { background:#fff; border:1px solid var(--border);
+                    border-radius:12px; padding:22px; margin-bottom:16px; box-shadow:0 1px 4px rgba(0,0,0,.04); }
+        .pregunta .num-p { font-size:.8em; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+        .pregunta .enunc { font-weight:600; margin-bottom:16px; line-height:1.6; font-size:1.02em; color:var(--primary); }
+
+        .opciones { display:flex; flex-direction:column; gap:8px; }
+        .opcion { display:flex; align-items:flex-start; gap:10px;
+                  padding:10px 14px; border-radius:8px; cursor:pointer;
+                  border:2px solid var(--border); background:#fff;
+                  font-size:.93em; transition:all .15s; width:100%; text-align:left; }
+        .opcion:disabled { cursor:default; }
+        .opcion:hover:not(:disabled) { border-color:var(--accent); background:#eaf4fd; transform:translateX(2px); }
+        .opcion-seleccionada { border-color:var(--accent)!important; background:#eaf4fd!important; font-weight:600; transform:translateX(2px); }
+        .opcion-correcta  { border-color:var(--success)!important; background:#d4edda!important; }
+        .opcion-incorrecta{ border-color:var(--danger)!important;  background:#f8d7da!important; }
+        .opcion .letra { min-width:28px; height:28px; border-radius:50%;
+                         background:var(--accent); color:#fff; font-size:.8em;
+                         font-weight:700; display:flex; align-items:center;
+                         justify-content:center; flex-shrink:0; }
+        .opcion-correcta  .letra { background:var(--success); }
+        .opcion-incorrecta .letra { background:var(--danger); }
+
+        /* ── Resultado ── */
+        .resultado-score { text-align:center; padding:28px 0; }
+        .score-circle { width:120px; height:120px; border-radius:50%; margin:0 auto 16px;
+                        display:flex; flex-direction:column; align-items:center;
+                        justify-content:center; font-size:2em; font-weight:700;
+                        color:#fff; }
+        .score-aprobado { background:var(--success); }
+        .score-reforzar { background:var(--warning); }
+        .score-reprobado{ background:var(--danger); }
+        .score-sub  { font-size:.5em; font-weight:400; opacity:.9; }
+        .result-detail { display:flex; gap:16px; justify-content:center;
+                         flex-wrap:wrap; margin-top:16px; }
+        .result-chip { background:var(--bg); border:1px solid var(--border);
+                       border-radius:20px; padding:8px 18px; font-size:.9em; }
+        .result-chip strong { color:var(--accent); }
+
+        /* ── Recomendación ── */
+        .rec { padding:16px 20px; border-radius:10px; font-weight:600;
+               margin-top:20px; display:flex; align-items:center; gap:10px; }
+        .rec-AVANZAR  { background:#d4edda; color:#155724; border:1px solid #b8dacc; }
+        .rec-REFORZAR { background:#fff3cd; color:#856404; border:1px solid #ffd97d; }
+        .rec .rec-icon { font-size:1.5em; }
+
+        /* ── Botones ── */
+        .btn-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+        .btn { padding:11px 24px; border:none; border-radius:8px; cursor:pointer;
+               font-size:.95em; font-weight:600; transition:.15s; }
+        .btn-primary { background:var(--accent); color:#fff; }
+        .btn-primary:hover { background:#2980b9; }
+        .btn-success { background:var(--success); color:#fff; }
+        .btn-success:hover { background:#229954; }
+        .btn-purple  { background:var(--purple); color:#fff; }
+        .btn-purple:hover  { background:#7d3c98; }
+        .btn-warning { background:var(--warning); color:#fff; }
+        .btn-warning:hover { background:#d68910; }
+        .btn-ghost   { background:transparent; color:var(--muted); border:1px solid var(--border); }
+        .btn-ghost:hover { background:var(--bg); }
+
+        .estado-badge { display:inline-block; padding:3px 10px; border-radius:20px;
+                        font-size:.8em; font-weight:600; margin-left:8px; }
+        .badge-COMPLETADO  { background:#d4edda; color:#155724; }
+        .badge-EN_PROGRESO { background:#fff3cd; color:#856404; }
+        .badge-PENDIENTE   { background:#e2e8f0; color:#64748b; }
+    </style>
+</h:head>
+
+<h:body>
+<h:form id="f">
+
+    <!-- Header -->
+    <div class="header">
+        <h:outputLink value="index.xhtml">&#8592; Volver al listado</h:outputLink>
+        <h1>
+            <h:outputText rendered="#{detalleBean.clase != null}"
+                          value="Clase #{detalleBean.clase.numeroclase} — #{detalleBean.clase.tema}"/>
+            <h:outputText rendered="#{detalleBean.clase == null}" value="Clase no encontrada"/>
+        </h1>
+        <h:outputText rendered="#{detalleBean.progreso != null}"
+                      value="#{detalleBean.progreso.estado}"
+                      styleClass="estado-badge badge-#{detalleBean.progreso.estado}"/>
+    </div>
+
+    <div class="container">
+
+        <h:messages globalOnly="true" layout="table" infoClass="msg-info" errorClass="msg-error"/>
+
+        <!-- Clase no encontrada -->
+        <h:panelGroup rendered="#{detalleBean.clase == null}">
+            <div class="card">
+                <p style="color:var(--danger)">Clase no encontrada. Verifica el parámetro en la URL.</p>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="main" rendered="#{detalleBean.clase != null}">
+
+            <!-- ══ Indicador de pasos ══ -->
+            <div class="steps">
+                <div class="step #{detalleBean.faseVideo ? 'activo' : (detalleBean.faseCuestionario or detalleBean.faseResultado ? 'hecho' : '')}">
+                    <span class="num">🎬</span>1. Ver Video
+                </div>
+                <div class="step #{detalleBean.faseCuestionario ? 'activo' : (detalleBean.faseResultado ? 'hecho' : '')}">
+                    <span class="num">📝</span>2. Cuestionario
+                </div>
+                <div class="step #{detalleBean.faseResultado ? 'activo' : ''}">
+                    <span class="num">🏆</span>3. Resultado
+                </div>
+            </div>
+
+            <!-- ══ FASE 1: VIDEO ══ -->
+            <h:panelGroup rendered="#{detalleBean.faseVideo}">
+                <div class="card">
+                    <h2>🎬 Video de la clase</h2>
+                    <p class="sub">#{detalleBean.clase.descripcion}</p>
+
+                    <!-- YouTube embed -->
+                    <h:panelGroup rendered="#{detalleBean.clase.tieneVideo}">
+                        <div class="video-wrap">
+                            <iframe src="#{detalleBean.clase.embedUrl}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen="allowfullscreen"
+                                    title="Video clase #{detalleBean.clase.numeroclase}"/>
+                        </div>
+                    </h:panelGroup>
+
+                    <p style="font-size:.9em; color:var(--muted); margin-bottom:20px;">
+                        📌 Cuando termines de ver el video, haz clic en el botón para continuar con el cuestionario obligatorio.
+                    </p>
+
+                    <div class="btn-row">
+                        <h:commandButton value="✅ Terminé de ver el video → Ir al cuestionario"
+                                         styleClass="btn btn-success"
+                                         action="#{detalleBean.videoVisto()}"
+                                         update="f:main f:hdr"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+            <!-- ══ FASE 2: CUESTIONARIO ══ -->
+            <h:panelGroup id="quiz" rendered="#{detalleBean.faseCuestionario}">
+                <div class="card">
+                    <div class="quiz-header">
+                        <div>
+                            <h2>📝 Cuestionario — #{detalleBean.clase.tema}</h2>
+                            <p class="sub">Selecciona una opción por pregunta y luego envía.</p>
+                        </div>
+                        <div style="text-align:right;">
+                            <div class="quiz-progress-text">
+                                #{detalleBean.respuestasContestadas} / #{detalleBean.totalPreguntas} respondidas
+                            </div>
+                            <div class="quiz-prog-bar">
+                                <div class="quiz-prog-fill"
+                                     style="width:#{detalleBean.totalPreguntas > 0 ? (detalleBean.respuestasContestadas * 100 / detalleBean.totalPreguntas) : 0}%"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h:panelGroup rendered="#{detalleBean.preguntas != null}">
+                        <ui:repeat value="#{detalleBean.preguntas}" var="preg" varStatus="st">
+                            <div class="pregunta">
+                                <div class="num-p">Pregunta #{st.index + 1} de #{detalleBean.totalPreguntas}</div>
+                                <div class="enunc">#{preg.enunciado}</div>
+                                <div class="opciones">
+                                    <ui:repeat value="#{preg.opciones}" var="opc" varStatus="os">
+                                        <h:commandButton
+                                            styleClass="#{detalleBean.getCssOpcion(st.index, os.index)}"
+                                            disabled="#{detalleBean.cuestionarioEnviado}"
+                                            action="#{detalleBean.responder(st.index, os.index)}"
+                                            update="f:quiz">
+                                            <span class="letra">#{detalleBean.getLetraOpcion(os.index)}</span>
+                                            <span class="opc-txt">#{opc}</span>
+                                        </h:commandButton>
+                                    </ui:repeat>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </h:panelGroup>
+
+                    <div class="btn-row">
+                        <h:commandButton value="📤 Enviar respuestas y calcular nota"
+                                         styleClass="btn btn-primary"
+                                         rendered="#{not detalleBean.cuestionarioEnviado}"
+                                         action="#{detalleBean.enviarCuestionario()}"
+                                         update="f:main"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+            <!-- ══ FASE 3: RESULTADO ══ -->
+            <h:panelGroup rendered="#{detalleBean.faseResultado}">
+                <div class="card">
+                    <h2>🏆 Resultado</h2>
+                    <p class="sub">Clase #{detalleBean.clase.numeroclase} — #{detalleBean.clase.tema}</p>
+
+                    <div class="resultado-score">
+                        <div class="score-circle #{detalleBean.aprobada ? 'score-aprobado' : (detalleBean.calificacion >= 2.0 ? 'score-reforzar' : 'score-reprobado')}">
+                            #{detalleBean.calificacion}
+                            <span class="score-sub">/ 5.0</span>
+                        </div>
+
+                        <div class="result-detail">
+                            <span class="result-chip">✅ Correctas: <strong>#{detalleBean.puntaje} / #{detalleBean.totalPreguntas}</strong></span>
+                            <span class="result-chip">📊 Progreso: <strong>#{detalleBean.porcentajeProgreso}%</strong></span>
+                            <span class="result-chip">🎯 Nota: <strong>#{detalleBean.calificacion} / 5.0</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Recomendación del solucionador -->
+                    <h:panelGroup rendered="#{detalleBean.recomendacion != null}">
+                        <div class="rec rec-#{detalleBean.recomendacion.tipo}">
+                            <span class="rec-icon">#{detalleBean.recomendacion.tipo.name() == 'AVANZAR' ? '🚀' : '🔄'}</span>
+                            <span>🤖 Recomendación: #{detalleBean.recomendacion.mensaje}</span>
+                        </div>
+                    </h:panelGroup>
+
+                    <!-- Mostrar preguntas con respuestas -->
+                    <h:panelGroup rendered="#{detalleBean.preguntas != null}">
+                        <details style="margin-top:20px;">
+                            <summary style="cursor:pointer; font-weight:600; padding:10px 0; color:var(--accent);">
+                                📋 Ver corrección detallada
+                            </summary>
+                            <div style="margin-top:12px;">
+                                <ui:repeat value="#{detalleBean.preguntas}" var="preg" varStatus="st">
+                                    <div class="pregunta" style="margin-bottom:12px;">
+                                        <div class="num-p">
+                                            #{preg.correcta ? '✅' : '❌'} Pregunta #{st.index + 1}
+                                        </div>
+                                        <div class="enunc">#{preg.enunciado}</div>
+                                        <div class="opciones">
+                                            <ui:repeat value="#{preg.opciones}" var="opc" varStatus="os">
+                                                <div class="#{detalleBean.getCssOpcion(st.index, os.index)}"
+                                                     style="cursor:default;">
+                                                    <span class="letra">#{detalleBean.getLetraOpcion(os.index)}</span>
+                                                    #{opc}
+                                                </div>
+                                            </ui:repeat>
+                                        </div>
+                                        <p style="font-size:.82em; color:var(--success); margin-top:8px;">
+                                            Respuesta correcta: #{preg.letraCorrecta}
+                                        </p>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </details>
+                    </h:panelGroup>
+
+                    <!-- Botones de acción -->
+                    <div class="btn-row" style="margin-top:24px;">
+                        <!-- Avanzar si AVANZAR -->
+                        <h:commandButton value="▶ Avanzar a la siguiente clase"
+                                         styleClass="btn btn-purple"
+                                         rendered="#{detalleBean.recomendacion != null
+                                                     and detalleBean.recomendacion.tipo.name() == 'AVANZAR'
+                                                     and detalleBean.recomendacion.claseSugerida != null}"
+                                         action="#{detalleBean.avanzar()}"/>
+
+                        <!-- Reintentar si REFORZAR -->
+                        <h:commandButton value="🔄 Reintentar clase"
+                                         styleClass="btn btn-warning"
+                                         rendered="#{detalleBean.recomendacion != null
+                                                     and detalleBean.recomendacion.tipo.name() == 'REFORZAR'}"
+                                         action="#{detalleBean.reintentar()}"
+                                         update="f:main"/>
+
+                        <h:outputLink value="index.xhtml" styleClass="btn btn-ghost">
+                            ← Volver al listado
+                        </h:outputLink>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+        </h:panelGroup><!-- /main -->
+
+    </div>
+</h:form>
+</h:body>
+</html>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Curso Estructuras de Datos</title>
+    <style>
+        :root {
+            --primary:  #2c3e50;
+            --accent:   #3498db;
+            --success:  #27ae60;
+            --warning:  #f39c12;
+            --danger:   #e74c3c;
+            --purple:   #8e44ad;
+            --bg:       #f0f4f8;
+            --card:     #ffffff;
+            --border:   #dce3ec;
+            --text:     #2c3e50;
+            --muted:    #7f8c8d;
+        }
+        * { box-sizing:border-box; margin:0; padding:0; }
+        body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--text); }
+
+        .header { background:var(--primary); color:#fff; padding:20px 32px; }
+        .header h1 { font-size:1.4em; }
+        .header p  { opacity:.75; font-size:.9em; margin-top:4px; }
+
+        .container { max-width:1100px; margin:0 auto; padding:28px 20px; }
+
+        .msg-info  { background:#d4edda; border-left:4px solid var(--success);
+                     color:#155724; padding:12px 16px; border-radius:6px; margin-bottom:16px; }
+        .msg-error { background:#f8d7da; border-left:4px solid var(--danger);
+                     color:#721c24; padding:12px 16px; border-radius:6px; margin-bottom:16px; }
+
+        /* Resumen general */
+        .stats-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+        .stat-card { background:var(--card); border:1px solid var(--border); border-radius:10px;
+                     padding:18px 22px; flex:1; min-width:160px; }
+        .stat-card .val { font-size:2em; font-weight:700; color:var(--accent); }
+        .stat-card .lbl { font-size:.85em; color:var(--muted); margin-top:4px; }
+
+        .prog-outer { background:#ddd; border-radius:8px; height:22px; width:100%;
+                      max-width:600px; margin:12px 0 6px; overflow:hidden; }
+        .prog-inner { height:22px; border-radius:8px; background:linear-gradient(90deg,var(--accent),var(--success));
+                      transition:width .5s; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; }
+        .prog-inner span { font-size:.75em; font-weight:700; color:#fff; white-space:nowrap; }
+
+        /* Tabla */
+        .tabla-wrap { overflow-x:auto; }
+        table  { border-collapse:collapse; width:100%; background:var(--card);
+                 border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+        th { background:var(--primary); color:#fff; padding:12px 14px; text-align:left;
+             font-size:.85em; font-weight:600; }
+        td { padding:11px 14px; border-bottom:1px solid var(--border); font-size:.9em; }
+        tr:last-child td { border-bottom:none; }
+        tr:hover td { background:#f8fafc; }
+
+        .badge { display:inline-block; padding:3px 10px; border-radius:20px;
+                 font-size:.78em; font-weight:600; }
+        .badge-COMPLETADO  { background:#d4edda; color:#155724; }
+        .badge-EN_PROGRESO { background:#fff3cd; color:#856404; }
+        .badge-PENDIENTE   { background:#e2e8f0; color:#64748b; }
+
+        .mini-bar { width:80px; height:8px; background:#ddd; border-radius:4px; display:inline-block; vertical-align:middle; }
+        .mini-bar-fill { height:8px; border-radius:4px; background:var(--accent); display:block; }
+
+        .btn-ver { padding:6px 14px; background:var(--accent); color:#fff; border:none;
+                   border-radius:6px; cursor:pointer; font-size:.85em; font-weight:600;
+                   text-decoration:none; display:inline-block; transition:.15s; }
+        .btn-ver:hover { background:#2980b9; }
+
+        .nota { font-weight:600; }
+        .nota-alta  { color:var(--success); }
+        .nota-media { color:var(--warning); }
+        .nota-baja  { color:var(--danger); }
+
+        h2.section { font-size:1.05em; color:var(--primary); margin:24px 0 14px;
+                     border-bottom:2px solid var(--border); padding-bottom:8px; }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="header">
+        <h1>📚 Curso — Estructuras de Datos</h1>
+        <p>36 clases · Flujo: Ver video → Cuestionario → Nota automática → Recomendación</p>
+    </div>
+
+    <div class="container">
+        <h:form id="mainForm">
+
+            <h:messages globalOnly="true" layout="table" infoClass="msg-info" errorClass="msg-error"/>
+
+            <!-- ── Resumen ── -->
+            <h2 class="section">📊 Tu progreso general</h2>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="val">#{cursoBean.totalCompletadas}</div>
+                    <div class="lbl">Clases completadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val">#{36 - cursoBean.totalCompletadas}</div>
+                    <div class="lbl">Clases pendientes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val">#{cursoBean.porcentajeGeneral}%</div>
+                    <div class="lbl">Avance del curso</div>
+                </div>
+            </div>
+
+            <div class="prog-outer">
+                <div class="prog-inner" style="width: #{cursoBean.porcentajeGeneral}%">
+                    <span>#{cursoBean.porcentajeGeneral}%</span>
+                </div>
+            </div>
+            <p style="font-size:.85em; color:var(--muted); margin-top:4px;">
+                Porcentaje calculado automáticamente según clases aprobadas (nota ≥ 3.0 y progreso ≥ 80%)
+            </p>
+
+            <!-- ── Tabla ── -->
+            <h2 class="section">📋 Lista de clases</h2>
+            <div class="tabla-wrap">
+                <h:panelGroup id="tablaClases">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tema</th>
+                                <th>Estado</th>
+                                <th>Progreso</th>
+                                <th>Nota</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{cursoBean.progresos}" var="p">
+                                <tr>
+                                    <td><strong>#{p.clase.numeroclase}</strong></td>
+                                    <td>#{p.clase.tema}</td>
+                                    <td>
+                                        <span class="badge badge-#{p.estado}">#{p.estado}</span>
+                                    </td>
+                                    <td>
+                                        <span class="mini-bar">
+                                            <span class="mini-bar-fill" style="width:#{p.progresoPorcentaje}%"/>
+                                        </span>
+                                        <span style="font-size:.82em; color:var(--muted); margin-left:6px;">
+                                            #{p.progresoPorcentaje}%
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <h:outputText rendered="#{p.calificacion != null}"
+                                                      styleClass="nota #{p.calificacion >= 3.0 ? 'nota-alta' : (p.calificacion >= 2.0 ? 'nota-media' : 'nota-baja')}"
+                                                      value="#{p.calificacion}"/>
+                                        <h:outputText rendered="#{p.calificacion == null}"
+                                                      style="color:var(--muted)" value="—"/>
+                                    </td>
+                                    <td>
+                                        <h:outputLink value="detalle.xhtml?clase=#{p.clase.numeroclase}"
+                                                      styleClass="btn-ver">
+                                            🎬 Ir a la clase
+                                        </h:outputLink>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </h:panelGroup>
+            </div>
+
+        </h:form>
+    </div>
+</h:body>
+</html>

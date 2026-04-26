@@ -1,0 +1,290 @@
+[
+  {
+    "numero": 1,
+    "tema": "Introducción a estructuras de datos",
+    "descripcion": "Fundamentos y conceptos básicos de estructuras de datos",
+    "material_url": "https://www.youtube.com/embed/Df-sgxGzyTg?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "Df-sgxGzyTg"
+  },
+  {
+    "numero": 2,
+    "tema": "Análisis de algoritmos y notación Big-O",
+    "descripcion": "Complejidad temporal y espacial de algoritmos",
+    "material_url": "https://youtu.be/UPDjjuz1Hkw?si=sta9uZtxgZqthGWL",
+    "tipo_material": "VIDEO",
+    "youtube_id": "v4cd1O4zkGw"
+  },
+  {
+    "numero": 3,
+    "tema": "Tipos de datos abstractos (TDA)",
+    "descripcion": "Abstracción de datos y contratos de interfaz",
+    "material_url": "https://www.youtube.com/embed/oz9cEi_qKNs?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "oz9cEi_qKNs"
+  },
+  {
+    "numero": 4,
+    "tema": "Arreglos (arrays)",
+    "descripcion": "Estructura de arreglos unidimensionales",
+    "material_url": "https://www.youtube.com/embed/NptnmWvkbTw?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "NptnmWvkbTw"
+  },
+  {
+    "numero": 5,
+    "tema": "Arreglos multidimensionales",
+    "descripcion": "Matrices y arreglos de múltiples dimensiones",
+    "material_url": "https://www.youtube.com/embed/iqT9tvUs62I?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "iqT9tvUs62I"
+  },
+  {
+    "numero": 6,
+    "tema": "Strings y manejo de cadenas",
+    "descripcion": "Operaciones y algoritmos sobre cadenas de caracteres",
+    "material_url": "https://www.youtube.com/embed/AEwzFcrGx5E?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "AEwzFcrGx5E"
+  },
+  {
+    "numero": 7,
+    "tema": "Listas enlazadas simples",
+    "descripcion": "Implementación y operaciones de listas enlazadas simples",
+    "material_url": "https://www.youtube.com/embed/njTh_OwMljA?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "njTh_OwMljA"
+  },
+  {
+    "numero": 8,
+    "tema": "Listas enlazadas dobles",
+    "descripcion": "Implementación y operaciones de listas doblemente enlazadas",
+    "material_url": "https://www.youtube.com/embed/ZoG2hONatBo?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "ZoG2hONatBo"
+  },
+  {
+    "numero": 9,
+    "tema": "Listas circulares",
+    "descripcion": "Listas enlazadas con nodo final apuntando al inicio",
+    "material_url": "https://www.youtube.com/embed/GXnLGCod31A?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "GXnLGCod31A"
+  },
+  {
+    "numero": 10,
+    "tema": "Pilas (stacks)",
+    "descripcion": "Estructura LIFO y sus aplicaciones",
+    "material_url": "https://www.youtube.com/embed/I5lq6sCuABE?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "I5lq6sCuABE"
+  },
+  {
+    "numero": 11,
+    "tema": "Colas (queues)",
+    "descripcion": "Estructura FIFO y sus aplicaciones",
+    "material_url": "https://www.youtube.com/embed/XuCbpw6Bj1U?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "XuCbpw6Bj1U"
+  },
+  {
+    "numero": 12,
+    "tema": "Colas avanzadas",
+    "descripcion": "Colas de prioridad y variantes",
+    "material_url": "https://www.youtube.com/embed/wptevk0bshY?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "wptevk0bshY"
+  },
+  {
+    "numero": 13,
+    "tema": "Recursión",
+    "descripcion": "Técnicas de recursión y casos base",
+    "material_url": "https://www.youtube.com/embed/kepFmOvxznI?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "kepFmOvxznI"
+  },
+  {
+    "numero": 14,
+    "tema": "Backtracking",
+    "descripcion": "Exploración exhaustiva con vuelta atrás",
+    "material_url": "https://www.youtube.com/embed/DKCbsiDBN6c?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "DKCbsiDBN6c"
+  },
+  {
+    "numero": 15,
+    "tema": "Divide y vencerás",
+    "descripcion": "Paradigma de diseño de algoritmos",
+    "material_url": "https://www.youtube.com/embed/2Rr2tW9zvmg?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "2Rr2tW9zvmg"
+  },
+  {
+    "numero": 16,
+    "tema": "Introducción a árboles",
+    "descripcion": "Conceptos básicos de árboles y terminología",
+    "material_url": "https://www.youtube.com/embed/oSWTXtMglKE?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "oSWTXtMglKE"
+  },
+  {
+    "numero": 17,
+    "tema": "Árboles binarios",
+    "descripcion": "Estructura y propiedades de los árboles binarios",
+    "material_url": "https://www.youtube.com/embed/H5JubkIy_p8?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "H5JubkIy_p8"
+  },
+  {
+    "numero": 18,
+    "tema": "Recorridos de árboles",
+    "descripcion": "InOrder, PreOrder, PostOrder y BFS",
+    "material_url": "https://www.youtube.com/embed/BHB0B1jFKQc?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "BHB0B1jFKQc"
+  },
+  {
+    "numero": 19,
+    "tema": "Árboles binarios de búsqueda (BST)",
+    "descripcion": "Propiedad BST e inserción/búsqueda",
+    "material_url": "https://www.youtube.com/embed/pYT9F8_LFTM?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "pYT9F8_LFTM"
+  },
+  {
+    "numero": 20,
+    "tema": "Operaciones en BST",
+    "descripcion": "Eliminación, balanceo y casos especiales en BST",
+    "material_url": "https://www.youtube.com/embed/wcIRPqTR3Kc?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "wcIRPqTR3Kc"
+  },
+  {
+    "numero": 21,
+    "tema": "Árboles balanceados (AVL)",
+    "descripcion": "Auto-balanceo y rotaciones AVL",
+    "material_url": "https://www.youtube.com/embed/jDM6_TnYIqE?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "jDM6_TnYIqE"
+  },
+  {
+    "numero": 22,
+    "tema": "Árboles Heap",
+    "descripcion": "Min-Heap, Max-Heap y Heapify",
+    "material_url": "https://www.youtube.com/embed/t0Cq6tVNRBA?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "t0Cq6tVNRBA"
+  },
+  {
+    "numero": 23,
+    "tema": "Colas de prioridad",
+    "descripcion": "Implementación con Heap y aplicaciones",
+    "material_url": "https://www.youtube.com/embed/HCEr35qpawQ?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "HCEr35qpawQ"
+  },
+  {
+    "numero": 24,
+    "tema": "Tablas hash",
+    "descripcion": "Estructura hash y funciones de dispersión",
+    "material_url": "https://www.youtube.com/embed/shs0KM3wKv0?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "shs0KM3wKv0"
+  },
+  {
+    "numero": 25,
+    "tema": "Funciones hash",
+    "descripcion": "Diseño y propiedades de buenas funciones hash",
+    "material_url": "https://www.youtube.com/embed/knV86FlSXJ8?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "knV86FlSXJ8"
+  },
+  {
+    "numero": 26,
+    "tema": "Manejo de colisiones",
+    "descripcion": "Encadenamiento, sondeo lineal y cuadrático",
+    "material_url": "https://www.youtube.com/embed/T9gct6Dx-jo?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "T9gct6Dx-jo"
+  },
+  {
+    "numero": 27,
+    "tema": "Introducción a grafos",
+    "descripcion": "Definición, tipos y terminología de grafos",
+    "material_url": "https://www.youtube.com/embed/gXgEDyodOJU?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "gXgEDyodOJU"
+  },
+  {
+    "numero": 28,
+    "tema": "Representación de grafos",
+    "descripcion": "Matriz de adyacencia y lista de adyacencia",
+    "material_url": "https://www.youtube.com/embed/WQ2NTez5s9w?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "WQ2NTez5s9w"
+  },
+  {
+    "numero": 29,
+    "tema": "Recorridos en grafos (BFS y DFS)",
+    "descripcion": "Búsqueda en anchura y en profundidad",
+    "material_url": "https://www.youtube.com/embed/pcKY4hjDrxk?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "pcKY4hjDrxk"
+  },
+  {
+    "numero": 30,
+    "tema": "Grafos dirigidos y no dirigidos",
+    "descripcion": "Dígrafos, pesos y propiedades",
+    "material_url": "https://www.youtube.com/embed/eL-KZMpBNDU?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "eL-KZMpBNDU"
+  },
+  {
+    "numero": 31,
+    "tema": "Algoritmo de Dijkstra",
+    "descripcion": "Camino más corto en grafos con pesos positivos",
+    "material_url": "https://www.youtube.com/embed/EFg3u_E6eHU?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "EFg3u_E6eHU"
+  },
+  {
+    "numero": 32,
+    "tema": "Algoritmos de Prim y Kruskal",
+    "descripcion": "Árbol de expansión mínima",
+    "material_url": "https://www.youtube.com/embed/cplfcGZLZdc?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "cplfcGZLZdc"
+  },
+  {
+    "numero": 33,
+    "tema": "Detección de ciclos en grafos",
+    "descripcion": "Algoritmos para detectar ciclos dirigidos y no dirigidos",
+    "material_url": "https://www.youtube.com/embed/rKQaZuoUR4M?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "rKQaZuoUR4M"
+  },
+  {
+    "numero": 34,
+    "tema": "Disjoint-set (Union-Find)",
+    "descripcion": "Estructura para conjuntos disjuntos",
+    "material_url": "https://www.youtube.com/embed/ayW5B2W9hkc?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "ayW5B2W9hkc"
+  },
+  {
+    "numero": 35,
+    "tema": "Trie (árbol de prefijos)",
+    "descripcion": "Búsqueda eficiente de cadenas",
+    "material_url": "https://www.youtube.com/embed/zIjfhVPRZCg?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "zIjfhVPRZCg"
+  },
+  {
+    "numero": 36,
+    "tema": "Segment Tree y Fenwick Tree",
+    "descripcion": "Estructuras para consultas de rango",
+    "material_url": "https://www.youtube.com/embed/ZBHKZF5w4YU?rel=0&modestbranding=1",
+    "tipo_material": "VIDEO",
+    "youtube_id": "ZBHKZF5w4YU"
+  }
+]
